@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { getCurrentUser, onAuthStateChange, signOutUser } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Heart, Bell, Settings } from 'lucide-react';
+import { LogOut, User, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import AfyaBoraPage from './main-app';
 import WelcomeAnimation from '@/components/ui/welcome-animation';
@@ -103,25 +103,6 @@ const AppPage = () => {
           </div>
           
           <div className="flex items-center space-x-3">
-            {/* Notification Bell */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="relative hover:bg-green-50 transition-colors"
-            >
-              <Bell className="h-5 w-5 text-gray-600" />
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-            </Button>
-
-            {/* Settings */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="hover:bg-green-50 transition-colors"
-            >
-              <Settings className="h-5 w-5 text-gray-600" />
-            </Button>
-
             {/* User Info */}
             <div className="flex items-center space-x-3 px-3 py-2 bg-green-50 rounded-lg">
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
