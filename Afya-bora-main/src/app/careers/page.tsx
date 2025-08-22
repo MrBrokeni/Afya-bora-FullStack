@@ -12,35 +12,7 @@ import Footer from '@/components/ui/footer';
 const CareersPage = () => {
   const { isSwahili } = useLanguage();
 
-  const positions = [
-    {
-      title: isSwahili ? "Mtaalamu wa AI" : "AI Engineer",
-      department: isSwahili ? "Teknolojia" : "Technology",
-      location: isSwahili ? "Dar es Salaam" : "Dar es Salaam",
-      type: isSwahili ? "Muda Kamili" : "Full-time",
-      description: isSwahili
-        ? "Tunatafuta mtaalamu wa AI mwenye uzoefu wa kusaidia kuunda na kuboresha teknolojia yetu ya uchambuzi wa dawa."
-        : "We're looking for an experienced AI engineer to help build and improve our prescription analysis technology."
-    },
-    {
-      title: isSwahili ? "Mtaalamu wa Afya" : "Health Specialist",
-      department: isSwahili ? "Matibabu" : "Medical",
-      location: isSwahili ? "Dar es Salaam" : "Dar es Salaam",
-      type: isSwahili ? "Muda Kamili" : "Full-time",
-      description: isSwahili
-        ? "Tunatafuta mtaalamu wa afya mwenye uzoefu wa lishe na matibabu kusaidia kuunda mipango ya lishe ya kibinafsi."
-        : "We're looking for a health specialist with experience in nutrition and medicine to help create personalized nutrition plans."
-    },
-    {
-      title: isSwahili ? "Mtaalamu wa Biashara" : "Business Development",
-      department: isSwahili ? "Biashara" : "Business",
-      location: isSwahili ? "Dar es Salaam" : "Dar es Salaam",
-      type: isSwahili ? "Muda Kamili" : "Full-time",
-      description: isSwahili
-        ? "Tunatafuta mtaalamu wa biashara kusaidia kuunda uhusiano na wauzaji wa kienyeji na kupanua biashara yetu."
-        : "We're looking for a business development specialist to help build relationships with local vendors and expand our business."
-    }
-  ];
+  const positions: any[] = []; // No current positions
 
   const benefits = [
     {
@@ -113,68 +85,81 @@ const CareersPage = () => {
         </div>
       </section>
 
-      {/* Open Positions */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-50 to-blue-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              {isSwahili ? "Nafasi Zilizopo" : "Open Positions"}
-            </h2>
-            <p className="text-xl text-gray-600">
-              {isSwahili 
-                ? "Tazama nafasi zilizopo na uomba kazi inayokufaa"
-                : "View open positions and apply for the job that fits you"
-              }
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {positions.map((position, index) => (
-              <Card key={index} className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:scale-105">
-                <CardHeader>
-                  <CardTitle className="text-xl">{position.title}</CardTitle>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {position.location}
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {position.type}
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">{position.description}</p>
-                  <Button className="w-full transition-all duration-200 hover:scale-105">
-                    <Mail className="h-4 w-4 mr-2" />
-                    {isSwahili ? "Omba Kazi" : "Apply Now"}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+             {/* Open Positions */}
+       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-50 to-blue-50">
+         <div className="max-w-7xl mx-auto">
+           <div className="text-center mb-16">
+             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+               {isSwahili ? "Nafasi Zilizopo" : "Open Positions"}
+             </h2>
+             <p className="text-xl text-gray-600">
+               {isSwahili 
+                 ? "Tazama nafasi zilizopo na uomba kazi inayokufaa"
+                 : "View open positions and apply for the job that fits you"
+               }
+             </p>
+           </div>
+           
+           <div className="text-center">
+             <Card className="max-w-2xl mx-auto border-0 shadow-lg">
+               <CardContent className="p-12">
+                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                   <Mail className="h-8 w-8 text-primary" />
+                 </div>
+                 <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+                   {isSwahili ? "Hakuna Nafasi Zilizopo Sasa Hivi" : "No Current Openings"}
+                 </h3>
+                 <p className="text-gray-600 mb-6 text-lg">
+                   {isSwahili 
+                     ? "Kwa sasa hatuna nafasi za kazi zilizopo. Tafadhali rudi tena baada ya muda kujua nafasi mpya."
+                     : "We currently don't have any open positions. Please check back frequently for new opportunities."
+                   }
+                 </p>
+                 <div className="bg-blue-50 p-4 rounded-lg">
+                   <p className="text-blue-800 text-sm">
+                     {isSwahili 
+                       ? "💡 : Unaweza kutuma barua pepe kwa info@afyabora.co.tz yenye CV na Cover Letter na tunaweza kukuwasiliana wakati nafasi ikitokea."
+                       : "💡 Tip: You can email us at info@afyabora.co.tz with your CV and Cover Letter and we'll contact you when positions become available."
+                     }
+                   </p>
+                 </div>
+               </CardContent>
+             </Card>
+           </div>
+         </div>
+       </section>
 
-      {/* Contact */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            {isSwahili ? "Huna Nafasi Unayotaka?" : "Don't See the Role You Want?"}
-          </h2>
-          <p className="text-xl text-green-100 mb-8">
-            {isSwahili 
-              ? "Wasiliana nasi na utujulishe kuhusu uzoefu wako. Tunaweza kuunda nafasi kwa ajili yako."
-              : "Contact us and tell us about your experience. We might create a role for you."
-            }
-          </p>
-          <Button size="lg" variant="secondary" className="text-lg px-8 py-4 transition-all duration-200 hover:scale-105">
-            <Mail className="h-5 w-5 mr-2" />
-            {isSwahili ? "Wasiliana Nasi" : "Contact Us"}
-          </Button>
-        </div>
-      </section>
+             {/* Contact */}
+       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary">
+         <div className="max-w-4xl mx-auto text-center">
+           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+             {isSwahili ? "Wasiliana Nasi" : "Get In Touch"}
+           </h2>
+           <p className="text-xl text-green-100 mb-8">
+             {isSwahili 
+               ? "Una maswali au Maoni? Wasiliana nasi."
+               : "Have questions or want to share your experience? Get in touch with us."
+             }
+           </p>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
+             <div className="text-center">
+               <div className="text-2xl mb-2">📧</div>
+               <p className="font-semibold">Email</p>
+               <p className="text-green-100">info@afyabora.co.tz</p>
+             </div>
+             <div className="text-center">
+               <div className="text-2xl mb-2">📞</div>
+               <p className="font-semibold">Phone</p>
+               <p className="text-green-100">+255 718 393 277</p>
+             </div>
+             <div className="text-center">
+               <div className="text-2xl mb-2">📍</div>
+               <p className="font-semibold">Location</p>
+               <p className="text-green-100">Mwanga Tower, Dar es Salaam, Tanzania</p>
+             </div>
+           </div>
+         </div>
+       </section>
 
       {/* Footer */}
       <Footer />
