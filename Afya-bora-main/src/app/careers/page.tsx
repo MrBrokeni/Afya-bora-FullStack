@@ -3,10 +3,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, ArrowLeft, Users, Zap, Target, Mail, MapPin, Clock } from 'lucide-react';
+import { Users, Zap, Target, Mail, MapPin, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/ui/language-switcher';
+import Navigation from '@/components/ui/navigation';
+import Footer from '@/components/ui/footer';
 
 const CareersPage = () => {
   const { isSwahili } = useLanguage();
@@ -44,7 +45,7 @@ const CareersPage = () => {
   const benefits = [
     {
       icon: Users,
-      title: isSwahili ? "Timu ya Kujifurahisha" : "Great Team",
+      title: isSwahili ? "Timu Makini" : "Great Team",
       description: isSwahili
         ? "Fanya kazi na timu ya watu wenye uzoefu na wenye nia ya kubadilisha afya nchini Tanzania."
         : "Work with a team of experienced people passionate about transforming healthcare in Tanzania."
@@ -68,25 +69,7 @@ const CareersPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-green-100 z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-primary transition-transform hover:scale-110" />
-              <span className="text-xl font-bold text-primary">Afya Bora</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher />
-              <Link href="/landing">
-                <Button variant="outline" className="transition-all duration-200 hover:scale-105">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  {isSwahili ? "Rudi Nyumbani" : "Back Home"}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation showNavLinks={false} showAuthButtons={false} showBackButton={true} />
 
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -192,6 +175,9 @@ const CareersPage = () => {
           </Button>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

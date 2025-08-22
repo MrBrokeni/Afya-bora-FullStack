@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { 
-  Heart, 
   Brain, 
   Apple, 
   Users, 
@@ -14,15 +13,13 @@ import {
   CheckCircle, 
   Star,
   Smartphone,
-  Globe,
-  Award,
   TrendingUp,
-  Clock,
   Target
 } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/ui/language-switcher';
+import Navigation from '@/components/ui/navigation';
+import Footer from '@/components/ui/footer';
 
 const LandingPage = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -98,40 +95,7 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-green-100 z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-primary transition-transform hover:scale-110" />
-              <span className="text-xl font-bold text-primary">Afya Bora</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-600 hover:text-primary transition-colors duration-200">
-                {t('nav.features')}
-              </a>
-              <a href="#testimonials" className="text-gray-600 hover:text-primary transition-colors duration-200">
-                {t('nav.testimonials')}
-              </a>
-              <Link href="/about" className="text-gray-600 hover:text-primary transition-colors duration-200">
-                {t('nav.about')}
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher />
-              <Link href="/auth">
-                <Button variant="outline" className="hidden sm:flex transition-all duration-200 hover:scale-105">
-                  {t('nav.signIn')}
-                </Button>
-              </Link>
-              <Link href="/auth">
-                <Button className="bg-primary hover:bg-primary/90 transition-all duration-200 hover:scale-105">
-                  {t('nav.getStarted')}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation showNavLinks={true} showAuthButtons={true} showBackButton={false} />
 
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -302,52 +266,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Heart className="h-8 w-8 text-primary" />
-                <span className="text-xl font-bold">Afya Bora</span>
-              </div>
-              <p className="text-gray-400">
-                {t('footer.description')}
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">{t('footer.product')}</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/features" className="hover:text-white transition-colors">{t('nav.features')}</Link></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">API</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">{t('footer.company')}</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">{t('nav.about')}</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="/careers" className="hover:text-white transition-colors">Careers</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">{t('footer.support')}</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/help" className="hover:text-white transition-colors">Help Center</Link></li>
-                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>{t('footer.copyright')}</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

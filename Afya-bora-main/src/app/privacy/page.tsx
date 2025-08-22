@@ -3,10 +3,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, ArrowLeft, Shield, Lock, Eye, Database } from 'lucide-react';
+import { Shield, Lock, Eye, Database } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSwitcher from '@/components/ui/language-switcher';
+import Navigation from '@/components/ui/navigation';
+import Footer from '@/components/ui/footer';
 
 const PrivacyPage = () => {
   const { isSwahili } = useLanguage();
@@ -14,56 +15,38 @@ const PrivacyPage = () => {
   const sections = [
     {
       icon: Shield,
-      title: isSwahili ? "Usalama wa Data" : "Data Security",
+      title: isSwahili ? "Usalama wa Taarifa" : "Data Security",
       content: isSwahili 
-        ? "Tunatumia usalama wa daraja la biashara kuhakikisha kwamba data yako ya afya iko salama. Data yako imesimbwa na inahifadhiwa kwa njia salama."
+        ? "Tunatumia usalama wa daraja la juu kuhakikisha kwamba taarifa zako za afya ziko salama. Taarifaa zimesimbwa na zinahifadhiwa kwa njia salama."
         : "We use enterprise-grade security to ensure your health data is safe. Your data is encrypted and stored securely."
     },
     {
       icon: Lock,
       title: isSwahili ? "Faragha" : "Privacy",
       content: isSwahili
-        ? "Hatushiriki data yako na mtu yeyote bila idhini yako. Data yako ni yako na una udhibiti kamili juu yake."
+        ? "Hatushiriki Taarifa zako na mtu yeyote bila idhini yako. Taarifa zako ni zako na una udhibiti kamili juu yake."
         : "We do not share your data with anyone without your consent. Your data is yours and you have complete control over it."
     },
     {
       icon: Eye,
-      title: isSwahili ? "Ufahamu wa Data" : "Data Transparency",
+      title: isSwahili ? "Uazi wa Taarifa Zako" : "Data Transparency",
       content: isSwahili
-        ? "Unaweza kuona data yako yote na kujua jinsi tunavyotumia. Tunatoa ripoti za uwazi kuhusu matumizi ya data."
+        ? "Unaweza kuona Taarifa zako zote na kujua jinsi tunavyotumia. Tunatoa ripoti za uwazi kuhusu matumizi ya Taarifa."
         : "You can view all your data and know how we use it. We provide transparent reports about data usage."
     },
     {
       icon: Database,
-      title: isSwahili ? "Uhifadhi wa Data" : "Data Storage",
+      title: isSwahili ? "Uhifadhi wa Taarifa" : "Data Storage",
       content: isSwahili
-        ? "Data yako inahifadhiwa kwenye seva salama na inaweza kufikwa tu na wewe na timu yetu ya usalama."
-        : "Your data is stored on secure servers and can only be accessed by you and our security team."
+        ? "Taarifa zote zinahifadhiwa kwenye seva salama na inaweza kufikwa na wewe tu."
+        : "Your data is stored on secure servers and can only be accessed by only you."
     }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-green-100 z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-primary transition-transform hover:scale-110" />
-              <span className="text-xl font-bold text-primary">Afya Bora</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <LanguageSwitcher />
-              <Link href="/landing">
-                <Button variant="outline" className="transition-all duration-200 hover:scale-105">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  {isSwahili ? "Rudi Nyumbani" : "Back Home"}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation showNavLinks={false} showAuthButtons={false} showBackButton={true} />
 
       {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
@@ -124,6 +107,9 @@ const PrivacyPage = () => {
           </Link>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
