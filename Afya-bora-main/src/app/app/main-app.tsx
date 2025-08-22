@@ -167,7 +167,7 @@ export default function AfyaBoraPage() {
     : (isSidebarOpen ? "md:ml-64" : "md:ml-14"); 
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-background">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
       <ProgressSidebar 
         currentStep={currentStepId} 
         navigateToStep={navigateToStep} 
@@ -180,8 +180,13 @@ export default function AfyaBoraPage() {
         )}
       >
         {isMobile && !isSidebarOpen && (
-             <div className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md p-2 shadow-md md:hidden flex items-center justify-between">
-                <h1 className="text-lg font-headline font-bold text-primary">Afya Bora</h1>
+             <div className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md p-3 shadow-lg md:hidden flex items-center justify-between border-b border-green-100">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <Heart className="h-4 w-4 text-white" />
+                  </div>
+                  <h1 className="text-lg font-bold text-primary">Afya Bora</h1>
+                </div>
                 <ProgressSidebar 
                     currentStep={currentStepId} 
                     navigateToStep={navigateToStep} 
@@ -193,16 +198,34 @@ export default function AfyaBoraPage() {
         <div className="w-full max-w-4xl">
           {isLoadingDietPlan && currentStepId === 'prescription_patient_data' && (
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)] w-full">
-              <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-              <p className="text-lg font-semibold text-foreground">Generating your diet plan...</p>
-              <p className="text-muted-foreground">This might take a moment.</p>
+              <div className="relative">
+                <Loader2 className="h-16 w-16 animate-spin text-primary mb-6" />
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20 animate-ping"></div>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Generating your personalized diet plan...</h3>
+              <p className="text-gray-600 text-center max-w-md">
+                Our AI is analyzing your prescription and creating a customized nutrition plan just for you.
+              </p>
+              <div className="mt-6 flex space-x-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+              </div>
             </div>
           )}
-          {!isLoadingDietPlan && !isBootstrapping && renderStepContent()}
+          {!isLoadingDietPlan && !isBootstrapping && (
+            <div className="animate-in fade-in duration-500">
+              {renderStepContent()}
+            </div>
+          )}
           {!isLoadingDietPlan && isBootstrapping && (
-            <div className="flex flex-col items-center justify-center min-h-[200px] w-full">
-              <Loader2 className="h-8 w-8 animate-spin text-primary mb-3" />
-              <p className="text-sm text-muted-foreground">Loading your saved profile…</p>
+            <div className="flex flex-col items-center justify-center min-h-[300px] w-full">
+              <div className="relative">
+                <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20 animate-pulse"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Loading your profile...</h3>
+              <p className="text-gray-600">Retrieving your saved health data and preferences.</p>
             </div>
           )}
         </div>

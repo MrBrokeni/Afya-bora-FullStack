@@ -4,13 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { getCurrentUser, onAuthStateChange, signOutUser } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { LogOut, User, Heart } from 'lucide-react';
+import { LogOut, User, Heart, Bell, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import AfyaBoraPage from './main-app'; // Import the main app component
+import AfyaBoraPage from './main-app';
+import WelcomeAnimation from '@/components/ui/welcome-animation';
 
 const AppPage = () => {
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [hasShownWelcome, setHasShownWelcome] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -19,6 +22,11 @@ const AppPage = () => {
       if (user) {
         setUser(user);
         setIsLoading(false);
+        // Show welcome animation if not shown before
+        if (!hasShownWelcome) {
+          setShowWelcome(true);
+          setHasShownWelcome(true);
+        }
       } else {
         // User is not authenticated, redirect to auth page
         router.push('/auth');
@@ -26,7 +34,7 @@ const AppPage = () => {
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, [router, hasShownWelcome]);
 
   const handleSignOut = async () => {
     try {
@@ -49,36 +57,91 @@ const AppPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-blue-50">
         <div className="text-center">
-          <Heart className="h-12 w-12 text-primary animate-pulse mx-auto mb-4" />
-          <p className="text-gray-600">Loading your health dashboard...</p>
+          <div className="relative">
+            <Heart className="h-12 w-12 text-primary animate-pulse mx-auto mb-4" />
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
+          </div>
+          <p className="text-gray-600 animate-pulse">Loading your health dashboard...</p>
         </div>
       </div>
     );
   }
 
+  const handleWelcomeComplete = () => {
+    setShowWelcome(false);
+  };
+
+  const getUserFirstName = () => {
+    if (user?.displayName) {
+      return user.displayName.split(' ')[0];
+    }
+    if (user?.email) {
+      return user.email.split('@')[0];
+    }
+    return 'User';
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header with user info and sign out */}
-      <header className="bg-white border-b border-green-100 px-4 py-3">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+      {/* Welcome Animation */}
+      {showWelcome && (
+        <WelcomeAnimation 
+          userName={getUserFirstName()} 
+          onComplete={handleWelcomeComplete} 
+        />
+      )}
+
+      {/* Enhanced Header with premium UI */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-green-100/50 px-4 py-4 shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <Heart className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold text-primary">Afya Bora</span>
+          <div className="flex items-center space-x-3 group">
+            <div className="relative">
+              <Heart className="h-7 w-7 text-primary transition-transform group-hover:scale-110" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+            </div>
+            <span className="text-xl font-bold text-primary">Afya Bora</span>
           </div>
           
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <User className="h-4 w-4" />
-              <span>{user?.email}</span>
+          <div className="flex items-center space-x-3">
+            {/* Notification Bell */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="relative hover:bg-green-50 transition-colors"
+            >
+              <Bell className="h-5 w-5 text-gray-600" />
+              <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            </Button>
+
+            {/* Settings */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hover:bg-green-50 transition-colors"
+            >
+              <Settings className="h-5 w-5 text-gray-600" />
+            </Button>
+
+            {/* User Info */}
+            <div className="flex items-center space-x-3 px-3 py-2 bg-green-50 rounded-lg">
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-white" />
+              </div>
+              <div className="hidden sm:block">
+                <p className="text-sm font-medium text-gray-900">{getUserFirstName()}</p>
+                <p className="text-xs text-gray-500">{user?.email}</p>
+              </div>
             </div>
+
+            {/* Sign Out Button */}
             <Button
               variant="outline"
               size="sm"
               onClick={handleSignOut}
-              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 hover:border-red-300 transition-all duration-200"
             >
               <LogOut className="h-4 w-4 mr-2" />
-              Sign Out
+              <span className="hidden sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>

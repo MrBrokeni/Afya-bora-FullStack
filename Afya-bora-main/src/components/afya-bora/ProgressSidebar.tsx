@@ -14,6 +14,7 @@ import {
   Icon as LucideIcon,
   ChevronLeft,
   ChevronRight,
+  Heart,
 } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile'; // Assuming this hook exists
 
@@ -88,37 +89,72 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
   return (
     <aside
       className={cn(
-        'hidden md:flex flex-col w-64 bg-card text-card-foreground p-4 space-y-6 transition-all duration-300 ease-in-out fixed h-full z-30 shadow-lg',
+        'hidden md:flex flex-col w-64 bg-white/90 backdrop-blur-md text-card-foreground p-6 space-y-8 transition-all duration-300 ease-in-out fixed h-full z-30 shadow-xl border-r border-green-100/50',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:-translate-x-[calc(100%-3.5rem)]'
       )}
     >
       <div className="flex items-center justify-between">
         {isSidebarOpen && (
-          <h1 className="text-2xl font-headline font-bold text-primary">Afya Bora</h1>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+              <Heart className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-2xl font-bold text-primary">Afya Bora</h1>
+          </div>
         )}
-        <Button variant="ghost" size="icon" onClick={() => setIsSidebarOpen(!isSidebarOpen)} className={cn(!isSidebarOpen && "ml-auto")}>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
+          className={cn(
+            "hover:bg-green-50 transition-all duration-200",
+            !isSidebarOpen && "ml-auto"
+          )}
+        >
           {isSidebarOpen ? <ChevronLeft /> : <ChevronRight />}
         </Button>
       </div>
 
       {isSidebarOpen ? (
          <nav className="flex-grow">
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {STEPS.map((step, index) => {
               const Icon = iconMap[step.icon];
+              const isActive = currentStep === step.id;
+              const isCompleted = STEPS.findIndex(s => s.id === currentStep) > STEPS.findIndex(s => s.id === step.id);
+              
               return (
                 <li key={step.id}>
                   <Button
-                    variant={currentStep === step.id ? 'secondary' : 'ghost'}
+                    variant={isActive ? 'secondary' : 'ghost'}
                     className={cn(
-                      'w-full justify-start py-3 text-base',
-                       currentStep === step.id ? 'font-semibold text-primary bg-primary/10' : 'text-foreground/80 hover:bg-muted/50'
+                      'w-full justify-start py-4 px-4 text-base rounded-xl transition-all duration-200 group relative overflow-hidden',
+                      isActive 
+                        ? 'font-semibold text-primary bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 shadow-sm' 
+                        : 'text-gray-700 hover:bg-green-50 hover:text-primary hover:shadow-sm',
+                      isCompleted && !isActive && 'text-green-600 bg-green-50/50'
                     )}
                     onClick={() => navigateToStep(step.id)}
                     title={step.title}
                   >
-                    {Icon && <Icon className="mr-3 h-5 w-5 flex-shrink-0" />}
-                    <span className={cn(isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0 hidden')}>{step.title}</span>
+                    <div className="flex items-center w-full">
+                      <div className={cn(
+                        "relative mr-3",
+                        isActive && "animate-pulse"
+                      )}>
+                        {Icon && <Icon className="h-5 w-5 flex-shrink-0" />}
+                        {isCompleted && !isActive && (
+                          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        )}
+                      </div>
+                      <span className="flex-1 text-left">{step.title}</span>
+                      {isActive && (
+                        <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
+                      )}
+                    </div>
+                    {isActive && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+                    )}
                   </Button>
                 </li>
               );
@@ -160,9 +196,17 @@ const ProgressSidebar: React.FC<ProgressSidebarProps> = ({
       )}
 
       {isSidebarOpen && (
-        <div className="mt-auto text-xs text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Afya Bora. All rights reserved.</p>
-          <p className="mt-1">Your health, our priority.</p>
+        <div className="mt-auto p-4 bg-green-50/50 rounded-xl border border-green-100/50">
+          <div className="flex items-center space-x-2 mb-2">
+            <Heart className="h-4 w-4 text-primary" />
+            <span className="text-sm font-semibold text-primary">Health Journey</span>
+          </div>
+          <p className="text-xs text-gray-600 mb-1">
+            &copy; {new Date().getFullYear()} Afya Bora
+          </p>
+          <p className="text-xs text-gray-500">
+            Your health, our priority.
+          </p>
         </div>
       )}
     </aside>
