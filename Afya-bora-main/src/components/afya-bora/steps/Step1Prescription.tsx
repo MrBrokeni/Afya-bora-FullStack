@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { UploadCloud, AlertCircle, FileText, Camera, Zap, Loader2, User, CheckCircle, Leaf, ScanText, UserCheck } from 'lucide-react';
+import { UploadCloud, AlertCircle, FileText, Camera, Zap, Loader2, User, CheckCircle, Leaf, ScanText, UserCheck, Target } from 'lucide-react';
 import type { UserData, DietPlan, GenerateDietPlanInput } from '@/types/afya-bora';
 import { AfyaBoraGenerateDietPlanInputSchema } from '@/types/afya-bora';
 import { useToast } from '@/hooks/use-toast';
