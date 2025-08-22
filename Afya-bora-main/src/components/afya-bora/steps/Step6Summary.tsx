@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { getOrCreateUserId } from '@/lib/user';
 import { deleteUserData } from '@/lib/firestore';
+import HealthDataUpdate from '../HealthDataUpdate';
 // Shadcn charts: Bar, Line, Pie
 import { BarChart, LineChart, PieChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, Legend, Bar, Line, Pie, Cell } from 'recharts';
 
@@ -23,21 +24,82 @@ interface Step6SummaryProps {
   // selectedWorkoutPlan?: WorkoutPlan | null; // Add this if workout selection is implemented
   navigateToPrevStep: () => void;
   navigateToStep: (stepId: StepId) => void; // For "Update My Info"
+  updateUserData: (data: Partial<UserData>) => void;
 }
 
-// Mock data for charts until input is implemented
-const mockWeightData = [
-  { date: 'Week 1', weight: 70 }, { date: 'Week 2', weight: 69.5 },
-  { date: 'Week 3', weight: 69 }, { date: 'Week 4', weight: 68.8 },
-];
-const mockBloodSugarData = [
-  { date: 'Mon', fbs: 90, ppbs: 130 }, { date: 'Tue', fbs: 95, ppbs: 140 },
-  { date: 'Wed', fbs: 88, ppbs: 125 }, { date: 'Thu', fbs: 92, ppbs: 135 },
-];
-const mockBloodPressureData = [
-  { date: 'Mon', systolic: 120, diastolic: 80 }, { date: 'Tue', systolic: 122, diastolic: 78 },
-  { date: 'Wed', systolic: 118, diastolic: 82 }, { date: 'Thu', systolic: 125, diastolic: 80 },
-];
+// Helper function to generate chart data from user data
+const generateChartData = (userData: UserData) => {
+  const weightData = [];
+  const bloodSugarData = [];
+  const bloodPressureData = [];
+  
+  // Add initial data if available
+  if (userData.initialWeight) {
+    weightData.push({ 
+      date: 'Initial', 
+      weight: userData.initialWeight 
+    });
+  }
+  
+  if (userData.initialBloodSugar?.fbs || userData.initialBloodSugar?.ppbs) {
+    bloodSugarData.push({ 
+      date: 'Initial', 
+      fbs: userData.initialBloodSugar.fbs, 
+      ppbs: userData.initialBloodSugar.ppbs 
+    });
+  }
+  
+  if (userData.initialBloodPressure?.systolic || userData.initialBloodPressure?.diastolic) {
+    bloodPressureData.push({ 
+      date: 'Initial', 
+      systolic: userData.initialBloodPressure.systolic, 
+      diastolic: userData.initialBloodPressure.diastolic 
+    });
+  }
+  
+  // Add weekly tracking data if available
+  if (userData.dailyWeightEntries && userData.dailyWeightEntries.length > 0) {
+    userData.dailyWeightEntries.forEach((entry, index) => {
+      weightData.push({ 
+        date: `Week ${index + 1}`, 
+        weight: entry.weight 
+      });
+    });
+  }
+  
+  if (userData.bloodSugarReadings && userData.bloodSugarReadings.length > 0) {
+    userData.bloodSugarReadings.forEach((reading, index) => {
+      bloodSugarData.push({ 
+        date: `Week ${index + 1}`, 
+        fbs: reading.fbs, 
+        ppbs: reading.ppbs 
+      });
+    });
+  }
+  
+  if (userData.bloodPressureReadings && userData.bloodPressureReadings.length > 0) {
+    userData.bloodPressureReadings.forEach((reading, index) => {
+      bloodPressureData.push({ 
+        date: `Week ${index + 1}`, 
+        systolic: reading.systolic, 
+        diastolic: reading.diastolic 
+      });
+    });
+  }
+  
+  // If no data available, return empty arrays
+  return {
+    weightData: weightData.length > 0 ? weightData : [
+      { date: 'No Data', weight: 0 }
+    ],
+    bloodSugarData: bloodSugarData.length > 0 ? bloodSugarData : [
+      { date: 'No Data', fbs: 0, ppbs: 0 }
+    ],
+    bloodPressureData: bloodPressureData.length > 0 ? bloodPressureData : [
+      { date: 'No Data', systolic: 0, diastolic: 0 }
+    ]
+  };
+};
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -47,10 +109,14 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
   dietPlan,
   navigateToPrevStep,
   navigateToStep,
+  updateUserData,
 }) => {
   const { toast } = useToast();
   const userId = getOrCreateUserId();
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  // Generate chart data from user data
+  const chartData = generateChartData(userData);
   
   const handleShareReport = async () => {
     let reportText = `Afya Bora Health Summary:\n\n`;
@@ -179,7 +245,7 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
                 <div>
                   <h4 className="text-md font-semibold mb-1">Weekly Weight Trend (kg)</h4>
                   <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={mockWeightData}>
+                    <LineChart data={chartData.weightData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="date" fontSize={10}/>
                       <YAxis fontSize={10} domain={['dataMin - 2', 'dataMax + 2']}/>
@@ -192,7 +258,7 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
                 <div>
                   <h4 className="text-md font-semibold mb-1">Blood Sugar Readings (mg/dL)</h4>
                    <ResponsiveContainer width="100%" height={200}>
-                    <BarChart data={mockBloodSugarData}>
+                    <BarChart data={chartData.bloodSugarData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="date" fontSize={10}/>
                       <YAxis fontSize={10}/>
@@ -206,7 +272,7 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
                  <div>
                   <h4 className="text-md font-semibold mb-1">Blood Pressure Trend (mmHg)</h4>
                    <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={mockBloodPressureData}>
+                    <LineChart data={chartData.bloodPressureData}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="date" fontSize={10}/>
                       <YAxis fontSize={10} domain={['dataMin - 10', 'dataMax + 10']}/>
@@ -220,8 +286,8 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
               </div>
               <Alert variant="default" className="mt-4">
                 <Info className="h-4 w-4" />
-                <AlertTitle>Data Input Coming Soon</AlertTitle>
-                <AlertDescription>Functionality to log your daily weight, blood sugar, and blood pressure will be added soon to personalize these charts.</AlertDescription>
+                <AlertTitle>Health Tracking Active</AlertTitle>
+                <AlertDescription>Charts now display your actual health data. Update your measurements weekly in the "Update My Info" section to track your progress.</AlertDescription>
               </Alert>
             </SummarySection>
           </TabsContent>
@@ -238,6 +304,7 @@ const Step6Summary: React.FC<Step6SummaryProps> = ({
                      <Button onClick={() => navigateToStep('prescription_patient_data')} variant="outline" className="w-full text-sm">
                         <Edit3 className="mr-2 h-4 w-4" /> Update Prescription
                     </Button>
+                    <HealthDataUpdate userData={userData} updateUserData={updateUserData} />
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button variant="destructive" className="w-full text-sm" disabled={isDeleting}>

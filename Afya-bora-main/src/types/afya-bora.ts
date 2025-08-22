@@ -129,6 +129,18 @@ export interface UserData {
   locationCoordinates?: { lat: number; lng: number };
   locationCity?: string;
   
+  // Health tracking data
+  initialWeight?: number;
+  initialWeightUnit?: 'kg' | 'lbs';
+  initialBloodSugar?: {
+    fbs?: number; // Fasting Blood Sugar
+    ppbs?: number; // Postprandial Blood Sugar
+  };
+  initialBloodPressure?: {
+    systolic?: number;
+    diastolic?: number;
+  };
+  
   dailyWeightEntries?: Array<{ date: string; weight: number; unit: 'kg' | 'lbs' }>;
   bloodSugarReadings?: Array<{ date: string; fbs?: number; ppbs?: number }>;
   bloodPressureReadings?: Array<{ date: string; systolic?: number; diastolic?: number }>;

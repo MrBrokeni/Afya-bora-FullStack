@@ -76,6 +76,13 @@ export async function getUserProfile(userId: string): Promise<Partial<UserData> 
     activityLevel,
     locationCoordinates,
     locationCity,
+    initialWeight,
+    initialWeightUnit,
+    initialBloodSugar,
+    initialBloodPressure,
+    dailyWeightEntries,
+    bloodSugarReadings,
+    bloodPressureReadings,
   } = data;
   return {
     prescriptionText,
@@ -87,6 +94,13 @@ export async function getUserProfile(userId: string): Promise<Partial<UserData> 
     activityLevel,
     locationCoordinates,
     locationCity,
+    initialWeight,
+    initialWeightUnit,
+    initialBloodSugar,
+    initialBloodPressure,
+    dailyWeightEntries,
+    bloodSugarReadings,
+    bloodPressureReadings,
   } as Partial<UserData>;
 }
 

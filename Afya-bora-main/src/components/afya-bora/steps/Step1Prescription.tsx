@@ -68,6 +68,15 @@ const Step1Prescription: React.FC<Step1PrescriptionAndPatientDataProps> = ({
   const [weight, setWeight] = useState<string>(userData.weight?.toString() || '');
   const [weightUnit, setWeightUnit] = useState<'kg' | 'lbs'>(userData.weightUnit || 'kg');
   const [activityLevel, setActivityLevel] = useState<'sedentary' | 'lightly_active' | 'moderately_active' | 'very_active' | undefined>(userData.activityLevel);
+  
+  // Health tracking data
+  const [initialWeight, setInitialWeight] = useState<string>(userData.initialWeight?.toString() || '');
+  const [initialWeightUnit, setInitialWeightUnit] = useState<'kg' | 'lbs'>(userData.initialWeightUnit || 'kg');
+  const [initialFBS, setInitialFBS] = useState<string>(userData.initialBloodSugar?.fbs?.toString() || '');
+  const [initialPPBS, setInitialPPBS] = useState<string>(userData.initialBloodSugar?.ppbs?.toString() || '');
+  const [initialSystolic, setInitialSystolic] = useState<string>(userData.initialBloodPressure?.systolic?.toString() || '');
+  const [initialDiastolic, setInitialDiastolic] = useState<string>(userData.initialBloodPressure?.diastolic?.toString() || '');
+  
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const { toast } = useToast();
@@ -258,6 +267,17 @@ const Step1Prescription: React.FC<Step1PrescriptionAndPatientDataProps> = ({
       weight: parseFloat(weight),
       weightUnit: weightUnit,
       activityLevel: activityLevel,
+      // Health tracking data
+      initialWeight: initialWeight ? parseFloat(initialWeight) : undefined,
+      initialWeightUnit: initialWeightUnit,
+      initialBloodSugar: {
+        fbs: initialFBS ? parseFloat(initialFBS) : undefined,
+        ppbs: initialPPBS ? parseFloat(initialPPBS) : undefined,
+      },
+      initialBloodPressure: {
+        systolic: initialSystolic ? parseInt(initialSystolic) : undefined,
+        diastolic: initialDiastolic ? parseInt(initialDiastolic) : undefined,
+      },
     });
 
     // Persist latest profile to Firestore
@@ -270,6 +290,17 @@ const Step1Prescription: React.FC<Step1PrescriptionAndPatientDataProps> = ({
         weight: parseFloat(weight),
         weightUnit: weightUnit,
         activityLevel: activityLevel,
+        // Health tracking data
+        initialWeight: initialWeight ? parseFloat(initialWeight) : undefined,
+        initialWeightUnit: initialWeightUnit,
+        initialBloodSugar: {
+          fbs: initialFBS ? parseFloat(initialFBS) : undefined,
+          ppbs: initialPPBS ? parseFloat(initialPPBS) : undefined,
+        },
+        initialBloodPressure: {
+          systolic: initialSystolic ? parseInt(initialSystolic) : undefined,
+          diastolic: initialDiastolic ? parseInt(initialDiastolic) : undefined,
+        },
       });
     } catch (e) {
       console.error('Failed to save user profile:', e);
@@ -600,6 +631,134 @@ const Step1Prescription: React.FC<Step1PrescriptionAndPatientDataProps> = ({
         
         <div className="text-xs text-muted-foreground pt-4">
             <p>Your data is encrypted and kept confidential. Prescription images are processed by AI and not stored long-term beyond operational needs.</p>
+        </div>
+
+        <Separator className="my-6" />
+
+        <div className="space-y-1 mb-4">
+          <h2 className="text-xl font-semibold text-primary flex items-center">
+            <Target className="mr-2 h-5 w-5" /> 
+            3. Initial Health Measurements
+          </h2>
+           <p className="text-sm text-muted-foreground">Record your current health metrics. You'll be prompted weekly to update these for tracking progress.</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="initial-weight" className="text-sm">Initial Weight</Label>
+              <div className="flex items-center space-x-2">
+                <Input
+                  id="initial-weight"
+                  type="number"
+                  step="0.1"
+                  placeholder="e.g., 70"
+                  value={initialWeight}
+                  onChange={(e) => setInitialWeight(e.target.value)}
+                  className="w-full text-sm"
+                  disabled={isProcessingOCR || showCameraView}
+                />
+                <RadioGroup defaultValue={initialWeightUnit} onValueChange={(value: 'kg' | 'lbs') => setInitialWeightUnit(value)} className="flex" disabled={isProcessingOCR || showCameraView}>
+                  <div className="flex items-center space-x-1.5">
+                    <RadioGroupItem value="kg" id="initial-kg" />
+                    <Label htmlFor="initial-kg" className="text-xs">kg</Label>
+                  </div>
+                  <div className="flex items-center space-x-1.5">
+                    <RadioGroupItem value="lbs" id="initial-lbs" />
+                    <Label htmlFor="initial-lbs" className="text-xs">lbs</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="current-weight" className="text-sm">Current Weight (for diet plan)</Label>
+              <div className="flex items-center space-x-2">
+                <Input
+                  id="current-weight"
+                  type="number"
+                  step="0.1"
+                  placeholder="e.g., 70"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  className="w-full text-sm"
+                  disabled={isProcessingOCR || showCameraView}
+                />
+                <RadioGroup defaultValue={weightUnit} onValueChange={(value: 'kg' | 'lbs') => setWeightUnit(value)} className="flex" disabled={isProcessingOCR || showCameraView}>
+                  <div className="flex items-center space-x-1.5">
+                    <RadioGroupItem value="kg" id="current-kg" />
+                    <Label htmlFor="current-kg" className="text-xs">kg</Label>
+                  </div>
+                  <div className="flex items-center space-x-1.5">
+                    <RadioGroupItem value="lbs" id="current-lbs" />
+                    <Label htmlFor="current-lbs" className="text-xs">lbs</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="fbs" className="text-sm">Fasting Blood Sugar (mg/dL)</Label>
+              <Input
+                id="fbs"
+                type="number"
+                step="0.1"
+                placeholder="e.g., 90"
+                value={initialFBS}
+                onChange={(e) => setInitialFBS(e.target.value)}
+                className="w-full text-sm"
+                disabled={isProcessingOCR || showCameraView}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="ppbs" className="text-sm">Postprandial Blood Sugar (mg/dL)</Label>
+              <Input
+                id="ppbs"
+                type="number"
+                step="0.1"
+                placeholder="e.g., 130"
+                value={initialPPBS}
+                onChange={(e) => setInitialPPBS(e.target.value)}
+                className="w-full text-sm"
+                disabled={isProcessingOCR || showCameraView}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="systolic" className="text-sm">Systolic Blood Pressure (mmHg)</Label>
+              <Input
+                id="systolic"
+                type="number"
+                placeholder="e.g., 120"
+                value={initialSystolic}
+                onChange={(e) => setInitialSystolic(e.target.value)}
+                className="w-full text-sm"
+                disabled={isProcessingOCR || showCameraView}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="diastolic" className="text-sm">Diastolic Blood Pressure (mmHg)</Label>
+              <Input
+                id="diastolic"
+                type="number"
+                placeholder="e.g., 80"
+                value={initialDiastolic}
+                onChange={(e) => setInitialDiastolic(e.target.value)}
+                className="w-full text-sm"
+                disabled={isProcessingOCR || showCameraView}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="text-xs text-muted-foreground pt-4">
+            <p>These measurements will be used to track your health progress over time. You can update them weekly in the Summary section.</p>
         </div>
 
         <Button onClick={handleGenerateDietPlan} className="w-full text-base py-3" size="lg" disabled={isProcessingOCR || showCameraView }>
