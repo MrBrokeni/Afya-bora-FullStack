@@ -115,11 +115,11 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              {isSwahili ? "Thamani Zetu" : "Our Values"}
+              {isSwahili ? "Misingi Yetu" : "Our Values"}
             </h2>
             <p className="text-xl text-gray-600">
               {isSwahili 
-                ? "Thamani hizi ndizo zinazotuongoza katika kila kitu tunachofanya"
+                ? "Misingi hii ndiyo inayotuongoza katika kila kitu tunachofanya"
                 : "These values guide everything we do"
               }
             </p>

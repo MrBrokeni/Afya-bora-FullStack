@@ -1,9 +1,9 @@
 import React from 'react';
 import Step1PrescriptionRefactored from './steps/Step1PrescriptionRefactored';
-import Step3DietPlan from './steps/Step3DietPlan';
-import Step4Marketplace from './steps/Step4Marketplace';
-import Step5GymsWorkouts from './steps/Step5GymsWorkouts';
-import Step6Summary from './steps/Step6Summary';
+import Step3DietPlanRefactored from './steps/Step3DietPlanRefactored';
+import Step4MarketplaceRefactored from './steps/Step4MarketplaceRefactored';
+import Step5GymsWorkoutsRefactored from './steps/Step5GymsWorkoutsRefactored';
+import Step6SummaryRefactored from './steps/Step6SummaryRefactored';
 import type { UserData, DietPlan, StepId } from '@/types/afya-bora';
 
 interface StepRendererProps {
@@ -51,7 +51,7 @@ export function StepRenderer({
         );
       case 'diet_plan':
         return (
-          <Step3DietPlan
+          <Step3DietPlanRefactored
             userData={userData}
             dietPlan={dietPlan}
             setDietPlan={setDietPlan}
@@ -64,7 +64,7 @@ export function StepRenderer({
         );
       case 'marketplace':
         return (
-          <Step4Marketplace
+          <Step4MarketplaceRefactored
             userData={userData}
             dietPlan={dietPlan}
             navigateToNextStep={navigateToNextStep}
@@ -73,7 +73,7 @@ export function StepRenderer({
         );
       case 'gym_workouts':
         return (
-          <Step5GymsWorkouts
+          <Step5GymsWorkoutsRefactored
             userData={userData}
             updateUserData={updateUserData}
             navigateToNextStep={navigateToNextStep}
@@ -82,7 +82,7 @@ export function StepRenderer({
         );
       case 'summary':
         return (
-          <Step6Summary
+          <Step6SummaryRefactored
             userData={userData}
             dietPlan={dietPlan}
             navigateToPrevStep={navigateToPrevStep}
