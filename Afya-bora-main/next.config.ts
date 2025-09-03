@@ -18,13 +18,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Ensure redirects work properly on Vercel
-  async redirects() {
+  // Ensure proper handling of dynamic routes and redirects
+  async headers() {
     return [
       {
-        source: '/',
-        destination: '/landing',
-        permanent: false,
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
       },
     ];
   },
