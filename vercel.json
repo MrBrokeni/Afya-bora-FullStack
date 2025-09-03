@@ -6,8 +6,12 @@
   "framework": "nextjs",
   "installCommand": "cd Afya-bora-main && npm install",
   "buildCommand": "cd Afya-bora-main && npm run build",
-  "outputDirectory": "Afya-bora-main/.next"
-
+  "outputDirectory": "Afya-bora-main/.next",
+  "functions": {
+    "src/app/page.tsx": {
+      "maxDuration": 10
+    }
+  }
 }
 
 

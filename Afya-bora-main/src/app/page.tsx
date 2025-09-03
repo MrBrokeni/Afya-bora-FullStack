@@ -6,12 +6,18 @@ export default function HomePage() {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">Afya Bora</h1>
         <p className="text-gray-600 mb-8">Welcome to Afya Bora - Your Health Partner</p>
-        <Link 
-          href="/landing" 
-          className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
-        >
-          Get Started
-        </Link>
+        <div className="space-y-4">
+          <Link 
+            href="/landing" 
+            className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Go to Landing Page
+          </Link>
+          <div className="text-sm text-gray-500">
+            <p>If you see this page, the redirect didn't work automatically.</p>
+            <p>Click the button above to navigate manually.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

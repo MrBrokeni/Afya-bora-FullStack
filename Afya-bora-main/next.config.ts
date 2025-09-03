@@ -18,6 +18,17 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Ensure redirects work properly on Vercel
+  async redirects() {
+    console.log('Setting up redirects for Vercel deployment');
+    return [
+      {
+        source: '/',
+        destination: '/landing',
+        permanent: false,
+      },
+    ];
+  },
   // Ensure proper handling of dynamic routes and redirects
   async headers() {
     return [
