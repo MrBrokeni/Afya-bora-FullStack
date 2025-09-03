@@ -100,7 +100,7 @@ const PrivacyPage = () => {
               : "Contact us if you have questions about your data privacy or security."
             }
           </p>
-          <Link href="/contact">
+                      <Link href="/about">
             <Button size="lg" className="text-lg px-8 py-4 transition-all duration-200 hover:scale-105">
               {isSwahili ? "Wasiliana Nasi" : "Contact Us"}
             </Button>
