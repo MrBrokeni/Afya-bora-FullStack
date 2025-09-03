@@ -30,8 +30,8 @@ const nextConfig: NextConfig = {
   },
   // Additional Vercel optimizations
   experimental: {
-    // Disable features that might cause issues on Vercel
-    serverComponentsExternalPackages: [],
+    // Allow these server-only packages to remain external and not be bundled for the client
+    serverComponentsExternalPackages: ['genkit', '@genkit-ai/googleai', '@opentelemetry/sdk-node'],
   },
   // Ensure proper output for Vercel
   output: 'standalone',
@@ -41,6 +41,30 @@ const nextConfig: NextConfig = {
   generateStaticParams: async () => [],
   // Disable telemetry to prevent OpenTelemetry issues
   telemetry: false,
+  // Avoid bundling optional OpenTelemetry exporters and Node core modules in client builds
+  webpack: (config, { isServer }) => {
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@opentelemetry/exporter-jaeger': false,
+      '@opentelemetry/exporter-zipkin': false,
+      '@opentelemetry/exporter-trace-otlp-grpc': false,
+      '@opentelemetry/exporter-trace-otlp-http': false,
+      '@opentelemetry/otlp-grpc-exporter-base': false,
+    } as any;
+
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...(config.resolve.fallback || {}),
+        fs: false,
+        net: false,
+        tls: false,
+        child_process: false,
+        worker_threads: false,
+      };
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
