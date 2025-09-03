@@ -8,11 +8,14 @@ const firebaseConfig = {
     projectId: "afya-bora-411b1",
     storageBucket: "afya-bora-411b1.firebasestorage.app",
     messagingSenderId: "673266736624",
-    appId: "1:673266736624:web:a0b046fd2867c68f2f1135",
-    measurementId: "G-MPT1RK10RJ"
+    appId: "1:673266736624:web:a0b046fd2867c68f2f1135"
+    // Removed measurementId to prevent OpenTelemetry dependency issues on Vercel
 };
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig, {
+  // Explicitly disable performance monitoring to prevent OpenTelemetry dependencies
+  performance: false
+});
 
 export const db = initializeFirestore(app, {
   ignoreUndefinedProperties: true,

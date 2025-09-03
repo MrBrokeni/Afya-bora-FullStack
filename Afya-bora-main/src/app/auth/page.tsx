@@ -19,7 +19,7 @@ const AuthPage = () => {
     const unsubscribe = onAuthStateChange((user) => {
       if (user) {
         // User is signed in, redirect to main app
-        router.push('/app');
+        router.push('/dashboard');
       } else {
         setIsLoading(false);
       }
@@ -29,7 +29,7 @@ const AuthPage = () => {
   }, [router]);
 
   const handleAuthSuccess = () => {
-    router.push('/app');
+            router.push('/dashboard');
   };
 
   if (isLoading) {

@@ -94,7 +94,7 @@ A comprehensive healthcare application designed specifically for the Tanzanian h
 - `/` - Redirects to landing page
 - `/landing` - Premium landing page with feature showcase
 - `/auth` - Authentication page (sign in/sign up)
-- `/app` - Main application (protected route)
+- `/dashboard` - Main application (protected route)
 
 ## 🔐 Authentication Flow
 

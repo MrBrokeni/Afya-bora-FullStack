@@ -3,7 +3,7 @@
 ## ✅ Completed Work
 
 ### 1. **Main Application Refactoring**
-- **File**: `src/app/app/main-app.tsx`
+- **File**: `src/app/dashboard/main-app.tsx`
 - **Reduction**: 237 lines → 89 lines (62% reduction)
 - **Improvements**:
   - Extracted state management to `useAfyaBora` hook

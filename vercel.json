@@ -3,7 +3,10 @@
   "builds": [
     { "src": "Afya-bora-main/package.json", "use": "@vercel/next" }
   ],
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "installCommand": "cd Afya-bora-main && npm install",
+  "buildCommand": "cd Afya-bora-main && npm run build",
+  "outputDirectory": "Afya-bora-main/.next"
 }
 
 
