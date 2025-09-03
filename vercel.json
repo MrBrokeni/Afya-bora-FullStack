@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "Afya-bora-main/package.json", "use": "@vercel/next" }
+  ],
+  "framework": "nextjs"
+}
+
+
