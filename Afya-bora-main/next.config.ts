@@ -18,6 +18,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    {
+      source: '/',
+      destination: '/landing',
+      permanent: false,
+    },
+  ],
 };
 
 export default nextConfig;
