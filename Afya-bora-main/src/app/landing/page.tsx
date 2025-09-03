@@ -69,10 +69,10 @@ const LandingPage = () => {
     },
     {
       name: isSwahili ? "Denzel Trainer" : "Denzel Trainer",
-      role: isSwahili ? "Mpenzi wa Mazoezi" : "Fitness Enthusiast",
+      role: isSwahili ? "Mwalimu wa Mazoezi" : "Fitness Trainer",
       content: isSwahili
-        ? "Muunganisho wa lishe na ufuatiliaji wa mazoezi ni wa kushangaza. Sijawahi kujisikia vizuri zaidi!"
-        : "The combination of nutrition and fitness tracking is incredible. I've never felt better!",
+        ? "Muunganisho wa lishe na ufuatiliaji wa mazoezi ni wa kushangaza. Unanisaidia sana mimi pamoja na wanafunzi wangu!"
+        : "The combination of nutrition and fitness tracking is incredible.  Surely helps me and my Students!",
       rating: 5
     },
     {

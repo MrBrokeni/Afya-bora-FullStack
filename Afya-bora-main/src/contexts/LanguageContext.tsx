@@ -117,9 +117,9 @@ const translations = {
     'features.marketplace.title': 'Muunganisho wa Soko la Kienyeji',
     'features.marketplace.description': 'Unganisha na wauzaji wa kienyeji kwa vifaa safi, vya afya na uwasilishaji wa chakula.',
     'features.fitness.title': 'Mipango ya Mazoezi na Ujuzi',
-    'features.fitness.description': 'Pata mapendekezo ya gym na mazoezi ya kibinafsi kwa malengo yako ya mazoezi.',
-    'features.security.title': 'Salama na ya Faragha',
-    'features.security.description': 'Data yako ya afya imesimbwa na kulindwa na usalama wa daraja la biashara.',
+    'features.fitness.description': 'Pata mapendekezo ya gym na mazoezi binafsi kwa malengo yako.',
+    'features.security.title': 'Salama na Faragha',
+    'features.security.description': 'Taarifa zako za afya zimesimbwa na kulindwa kwa usalama wa daraja la Juu.',
     
     // How It Works
     'how.title': 'Jinsi Afya Bora Inavyofanya Kazi',
@@ -127,7 +127,7 @@ const translations = {
     'how.step1.title': 'Pakia Dawa Yako',
     'how.step1.description': 'Piga picha au pakia dawa ya daktari wako. AI yetu itatoa na kuchambua maelezo ya matibabu.',
     'how.step2.title': 'Pata Mpango wa Kibinafsi',
-    'how.step2.description': 'Pokea mpango wa chakula wa siku 7 wa kibinafsi, orodha ya ununuzi, na mapendekezo ya mazoezi kulingana na wasifu wako wa afya.',
+    'how.step2.description': 'Pokea Ratiba yako binafsi ya chakula kwa siku 7, orodha ya ununuzi, na mapendekezo ya mazoezi kulingana na wasifu wako wa afya.',
     'how.step3.title': 'Fuatilia na Boresha',
     'how.step3.description': 'Fuatilia maendeleo yako na zana za ufuatiliaji wa afya na upate ufahamu wa kuboresha ustawi wako kwa ujumla.',
     
@@ -137,11 +137,11 @@ const translations = {
     
     // CTA
     'cta.title': 'Tayari Kubadilisha Afya Yako?',
-    'cta.subtitle': 'Jiunge na watumiaji elfu ambao tayari wameboresha afya yao na Afya Bora',
+    'cta.subtitle': 'Jiunge na watumiaji Wengi ambao tayari wameboresha afya yao na Afya Bora',
     'cta.button': 'Anza Leo',
     
     // Footer
-    'footer.description': 'Msaidizi wako binafsi wa afya unaoendeshwa na AI na kutengenezwa kwa Tanzania.',
+    'footer.description': 'Msaidizi wako binafsi wa afya Anayetumia Teknolojia ya AI na kutengenezwa Nchini Tanzania.',
     'footer.product': 'Bidhaa',
     'footer.company': 'Kampuni',
     'footer.support': 'Msaada',
