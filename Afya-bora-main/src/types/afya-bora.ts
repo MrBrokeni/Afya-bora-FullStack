@@ -108,6 +108,9 @@ export type ExtractPrescriptionTextInput = z.infer<typeof ExtractPrescriptionTex
 
 export const ExtractPrescriptionTextOutputSchema = z.object({
   extractedText: z.string().describe('The text extracted from the prescription media. If no text is found or the document is unreadable, this may be an empty string or a note indicating that.'),
+  isHealthRelated: z.boolean().describe('Whether the extracted text appears to be health-related (prescription, medical document, health advice, etc.).'),
+  healthConfidence: z.number().min(0).max(1).describe('Confidence score (0-1) that the text is health-related.'),
+  validationMessage: z.string().optional().describe('Additional context about why the text was or was not considered health-related.'),
 });
 export type ExtractPrescriptionTextOutput = z.infer<typeof ExtractPrescriptionTextOutputSchema>;
 
